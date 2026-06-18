@@ -1,6 +1,8 @@
 HELP.md
+
+### Maven ###
 target/
-.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -14,10 +16,13 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+
+### VS Code ###
+.vscode/
 
 ### NetBeans ###
 /nbproject/private/
@@ -29,5 +34,46 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+### Logs ###
+logs/
+*.log
+
+### Java ###
+*.class
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+
+### Environment Variables ###
+.env
+.env.*
+
+### Spring Profiles / Secrets ###
+application-local.properties
+application-prod.properties
+application-secret.properties
+
+### Uploaded Files ###
+uploads/
+
+### Redis ###
+dump.rdb
+appendonly.aof
+
+### Docker ###
+docker-data/
+postgres-data/
+redis-data/
+
+### Temporary Files ###
+*.tmp
+*.swp
+*.bak
+
+### Coverage ###
+coverage/
+jacoco.exec
+
+### Generated Reports ###
+surefire-reports/
