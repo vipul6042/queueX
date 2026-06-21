@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JobService {
     private final JobRepository jobRepository;
+    private final QueueService queueService;
 
     public Job createJobRequest(@NonNull CreateJobRequest req){
         Job job=Job.builder()
@@ -26,7 +27,9 @@ public class JobService {
                 .jobStatus(JobStatus.QUEUED)
                 .build();
 
-        return jobRepository.save(job);
+        Job savedJob= jobRepository.save(job);
+        queueService.push(savedJob.getId().toString());
+        return savedJob;
     }
 
     public GetJobResponse getJob(UUID id) {

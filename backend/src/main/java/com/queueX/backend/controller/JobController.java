@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 
 public class JobController {
-    public final JobService jobService;
+    private final JobService jobService;
 
     @PostMapping("/createJob")
     public ResponseEntity<CreateJobResponse>createJob(
