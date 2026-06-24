@@ -79,4 +79,34 @@ public class JobService {
                 .orElseThrow(()->new NoSuchElementException("Job not found"));
         jobRepository.delete(job);
     }
+
+    public List<GetJobResponse>failedJobs(){
+        return jobRepository.findByJobStatus(JobStatus.FAILED)
+                .stream()
+                .map(job->new GetJobResponse(
+                        job.getId(),
+                        job.getJobType(),
+                        job.getPayload(),
+                        job.getJobStatus(),
+                        job.getRetryCount(),
+                        job.getErrorMessage()
+                ))
+                .toList();
+    }
+
+    public Job retry(UUID id){
+        Job job=jobRepository.findById(id)
+                .orElseThrow(()->new NoSuchElementException("Job not found"));
+
+        if (job.getJobStatus() != JobStatus.FAILED) {
+            throw new IllegalStateException("Only failed jobs can be retried");
+        }
+
+        job.setRetryCount(0);
+        job.setErrorMessage(null);
+        job.setJobStatus(JobStatus.QUEUED);
+        Job savedJob=jobRepository.save(job);
+        queueService.push(savedJob.getId().toString());
+        return savedJob;
+    }
 }

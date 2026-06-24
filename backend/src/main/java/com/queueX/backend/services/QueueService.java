@@ -14,8 +14,10 @@ public class QueueService {
         redisTemplate.opsForList().leftPush(QUEUE_NAME, jobId);
     }
 
-    public void pop() {
-        redisTemplate.opsForList().rightPop(QUEUE_NAME);
+    public String pop() {
+        if (redisTemplate.opsForList().size(QUEUE_NAME) == 0)
+            return null;
+        return redisTemplate.opsForList().rightPop(QUEUE_NAME);
     }
 
     public long queueSize() {

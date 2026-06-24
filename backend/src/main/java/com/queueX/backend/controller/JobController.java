@@ -22,46 +22,57 @@ public class JobController {
     private final JobService jobService;
 
     @PostMapping("/createJob")
-    public ResponseEntity<CreateJobResponse>createJob(
+    public ResponseEntity<CreateJobResponse> createJob(
             @RequestBody CreateJobRequest request
-            ){
-        Job job= jobService.createJobRequest(request);
-        CreateJobResponse res=new CreateJobResponse(
+    ) {
+        Job job = jobService.createJobRequest(request);
+        CreateJobResponse res = new CreateJobResponse(
                 job.getId(),
                 job.getJobStatus().name()
         );
         return ResponseEntity.ok(res);
     }
+
     @GetMapping("/all")
-    public  ResponseEntity<List<GetJobResponse>>getAllJob(){
-        List<GetJobResponse>jobs= jobService.getAllJob();
+    public ResponseEntity<List<GetJobResponse>> getAllJob() {
+        List<GetJobResponse> jobs = jobService.getAllJob();
         return ResponseEntity.ok(jobs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetJobResponse>getJob(
+    public ResponseEntity<GetJobResponse> getJob(
             @PathVariable UUID id
-            ){
+    ) {
         return ResponseEntity.ok(jobService.getJob(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GetJobResponse>updateJob(
+    public ResponseEntity<GetJobResponse> updateJob(
             @PathVariable UUID id,
             @RequestBody JobStatus status
-            ){
-        return ResponseEntity.ok(jobService.updateJob(id,new UpdateJobRequest(status)));
+    ) {
+        return ResponseEntity.ok(jobService.updateJob(id, new UpdateJobRequest(status)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>deleteJob(
+    public ResponseEntity<Void> deleteJob(
             @PathVariable UUID id
-    ){
+    ) {
         jobService.deleteJob(id);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/ping")
-    public String ping() {
-        return "pong";
+
+    @GetMapping("/failedJobs")
+    public ResponseEntity<List<GetJobResponse>>failedJobs(){
+        return ResponseEntity.ok(jobService.failedJobs());
     }
+
+    @PostMapping("/retry/{id}")
+    public ResponseEntity<CreateJobResponse>retry(
+            @PathVariable UUID id
+    ){
+        Job job=jobService.retry(id);
+        return ResponseEntity.ok(new CreateJobResponse(id,job.getJobStatus().name()));
+    }
+
 }
