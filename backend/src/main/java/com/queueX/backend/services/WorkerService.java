@@ -23,7 +23,7 @@ public class WorkerService {
     private final int MAX_RETRIES = 2;
     private final int failureChance = 50;
 
-    public void processNextJob() {
+    public void processNextJob() throws InterruptedException {
         String jobId = queueService.pop();
         if (jobId == null) {
             return;
@@ -39,6 +39,7 @@ public class WorkerService {
             log.info("Job {} status changed to RUNNING", job.getId());
 
             Thread.sleep(5000);
+
             if (random.nextInt(100) < failureChance) {
                 throw new RuntimeException(job.getJobType() + " service unavailable");
             }
@@ -53,7 +54,7 @@ public class WorkerService {
                 job.setRetryCount(job.getRetryCount() + 1);
                 job.setJobStatus(JobStatus.QUEUED);
                 jobRepository.save(job);
-                long delay = (long) Math.pow(2, job.getRetryCount()-1) * 5000;
+                long delay = (long) Math.pow(2, job.getRetryCount() - 1) * 5000;
                 long retryAt = System.currentTimeMillis() + delay;
                 delayedQueueService.push(jobId, retryAt);
 

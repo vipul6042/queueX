@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class QueueService {
@@ -15,9 +18,7 @@ public class QueueService {
     }
 
     public String pop() {
-        if (redisTemplate.opsForList().size(QUEUE_NAME) == 0)
-            return null;
-        return redisTemplate.opsForList().rightPop(QUEUE_NAME);
+        return redisTemplate.opsForList().rightPop(QUEUE_NAME, Duration.ofSeconds(59));
     }
 
     public long queueSize() {

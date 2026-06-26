@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class RetryScheduler {
     private final DelayedQueueService delayedQueueService;
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
     public void processDelayedJobs() {
         delayedQueueService.retryJob();
     }
