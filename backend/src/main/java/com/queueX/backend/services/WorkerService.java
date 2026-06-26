@@ -23,7 +23,7 @@ public class WorkerService {
     private final int MAX_RETRIES = 2;
     private final int failureChance = 50;
 
-    public void processNextJob() throws InterruptedException {
+    public void processNextJob(){
         String jobId = queueService.pop();
         if (jobId == null) {
             return;
