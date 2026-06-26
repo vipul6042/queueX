@@ -33,14 +33,7 @@ public class WorkerManagerService implements SmartLifecycle {
                 while (running && !Thread.currentThread().isInterrupted()) {
                     try {
                         workerService.processNextJob();
-                    }
-//                    catch (InterruptedException e) {
-//                        Thread.currentThread().interrupt();
-//                        log.info("Worker {} interrupted. Stopping...", workerId);
-//                        break;
-//
-//                    }
-                    catch (Exception e) {
+                    }catch (Exception e) {
 
                         if (!running) {
                             log.debug("Worker {} got exception during shutdown (expected): {}", workerId, e.getMessage());
@@ -82,9 +75,4 @@ public class WorkerManagerService implements SmartLifecycle {
         // Redis connection factory is phase 0, so this stops before it
         return Integer.MAX_VALUE;
     }
-
-//    @Override
-//    public boolean isAutoStartup() {
-//        return true;
-//    }
 }
