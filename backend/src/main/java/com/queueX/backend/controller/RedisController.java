@@ -1,6 +1,6 @@
 package com.queueX.backend.controller;
 
-import com.queueX.backend.services.QueueService;
+import com.queueX.backend.services.queues.QueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;

@@ -6,7 +6,7 @@ import com.queueX.backend.dto.GetJobResponse;
 import com.queueX.backend.dto.UpdateJobRequest;
 import com.queueX.backend.entity.Job;
 import com.queueX.backend.enums.JobStatus;
-import com.queueX.backend.services.JobService;
+import com.queueX.backend.services.job.JobService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

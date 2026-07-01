@@ -1,4 +1,4 @@
-package com.queueX.backend.services;
+package com.queueX.backend.services.job;
 
 import com.queueX.backend.dto.CreateJobRequest;
 import com.queueX.backend.dto.GetJobResponse;
@@ -6,6 +6,7 @@ import com.queueX.backend.dto.UpdateJobRequest;
 import com.queueX.backend.entity.Job;
 import com.queueX.backend.enums.JobStatus;
 import com.queueX.backend.repository.JobRepository;
+import com.queueX.backend.services.queues.QueueService;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;

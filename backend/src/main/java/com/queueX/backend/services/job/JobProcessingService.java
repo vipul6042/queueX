@@ -1,8 +1,12 @@
-package com.queueX.backend.services;
+package com.queueX.backend.services.job;
 
 import com.queueX.backend.entity.Job;
+import com.queueX.backend.entity.WorkerContext;
 import com.queueX.backend.enums.JobStatus;
 import com.queueX.backend.repository.JobRepository;
+import com.queueX.backend.services.queues.DeadLetterQueueService;
+import com.queueX.backend.services.queues.DelayedQueueService;
+import com.queueX.backend.services.queues.QueueService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,16 +18,16 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 
-public class WorkerService {
+public class JobProcessingService {
     private final QueueService queueService;
     private final DelayedQueueService delayedQueueService;
     private final DeadLetterQueueService deadLetterQueueService;
     private final JobRepository jobRepository;
     private final Random random = new Random();
-    private final int MAX_RETRIES = 2;
-    private final int failureChance = 50;
+    private static final int MAX_RETRIES = 2;
+    private static final int failureChance = 50;
 
-    public void processNextJob(){
+    public void processNextJob(WorkerContext workerContext){
         String jobId = queueService.pop();
         if (jobId == null) {
             return;

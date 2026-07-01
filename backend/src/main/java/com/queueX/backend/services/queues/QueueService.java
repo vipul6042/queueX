@@ -1,4 +1,4 @@
-package com.queueX.backend.services;
+package com.queueX.backend.services.queues;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

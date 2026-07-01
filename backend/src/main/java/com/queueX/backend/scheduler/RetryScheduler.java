@@ -1,6 +1,6 @@
 package com.queueX.backend.scheduler;
 
-import com.queueX.backend.services.DelayedQueueService;
+import com.queueX.backend.services.queues.DelayedQueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
